@@ -1,0 +1,241 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Cake.Gulp</name>
+    </assembly>
+    <members>
+        <member name="T:Cake.Gulp.GulpGlobalRunner">
+            <summary>
+            gulp global runner
+            </summary>
+        </member>
+        <member name="M:Cake.Gulp.GulpGlobalRunner.#ctor(Cake.Core.IO.IFileSystem,Cake.Core.ICakeEnvironment,Cake.Core.IO.IProcessRunner,Cake.Core.Tooling.IToolLocator)">
+            <summary>
+            creates a new gulp global runner
+            </summary>
+            <param name="fileSystem">the file system</param>
+            <param name="environment">The cake environment</param>
+            <param name="processRunner">The cake process runner</param>
+            <param name="tools">The tools locator</param>
+        </member>
+        <member name="M:Cake.Gulp.GulpGlobalRunner.Execute(System.Action{Cake.Gulp.GulpRunnerSettings})">
+            <summary>
+            Executes gulp from the global installation
+            </summary>
+        </member>
+        <member name="M:Cake.Gulp.GulpGlobalRunner.GetToolExecutableNames">
+            <summary>
+            Gets the possible names of the tool executable.
+            </summary>
+            <returns>
+            The tool executable name.
+            </returns>
+        </member>
+        <member name="T:Cake.Gulp.GulpLocalRunner">
+            <summary>
+            gulp local runner
+            </summary>
+        </member>
+        <member name="M:Cake.Gulp.GulpLocalRunner.#ctor(Cake.Core.IO.IFileSystem,Cake.Core.ICakeEnvironment,Cake.Core.IO.IProcessRunner,Cake.Core.Tooling.IToolLocator)">
+            <summary>
+            creates a new gulp local runner
+            </summary>
+            <param name="fileSystem">the file system</param>
+            <param name="environment">The cake environment</param>
+            <param name="processRunner">The cake process runner</param>
+            <param name="tools">The tools locator</param>
+        </member>
+        <member name="M:Cake.Gulp.GulpLocalRunner.Execute(System.Action{Cake.Gulp.GulpLocalRunnerSettings})">
+            <summary>
+            Executes gulp from the local installation
+            </summary>
+        </member>
+        <member name="M:Cake.Gulp.GulpLocalRunner.GetToolExecutableNames">
+            <summary>
+            Gets the possible names of the tool executable.
+            </summary>
+            <returns>
+            The tool executable name.
+            </returns>
+        </member>
+        <member name="T:Cake.Gulp.GulpLocalRunnerSettings">
+            <summary>
+            gulp local runner settings
+            </summary>
+        </member>
+        <member name="P:Cake.Gulp.GulpLocalRunnerSettings.PathToGulpJs">
+            <summary>
+            Path to node modules
+            </summary>
+        </member>
+        <member name="M:Cake.Gulp.GulpLocalRunnerSettings.SetPathToGulpJs(Cake.Core.IO.FilePath)">
+            <summary>
+            Overrides the default path to gulp javascript, the current working directory will be prepended to this path
+            </summary>
+            <param name="gulpJs">path to gulp if different from './node_modules/gulp/bin/gulp.js'</param>
+            <returns></returns>
+            <exception cref="T:System.IO.FileNotFoundException"></exception>
+        </member>
+        <member name="T:Cake.Gulp.GulpRunner`1">
+            <summary>
+            Base gulp runner
+            </summary>
+        </member>
+        <member name="M:Cake.Gulp.GulpRunner`1.#ctor(Cake.Core.IO.IFileSystem,Cake.Core.ICakeEnvironment,Cake.Core.IO.IProcessRunner,Cake.Core.Tooling.IToolLocator)">
+            <summary>
+            creates a new gulp runner
+            </summary>
+            <param name="fileSystem">the file system</param>
+            <param name="environment">The cake environment</param>
+            <param name="processRunner">The cake process runner</param>
+            <param name="tools">The tools locator</param>
+        </member>
+        <member name="M:Cake.Gulp.GulpRunner`1.GetToolName">
+            <summary>
+            Gets the name of the tool.
+            </summary>
+            <returns>
+            The name of the tool.
+            </returns>
+        </member>
+        <member name="M:Cake.Gulp.GulpRunner`1.Execute(System.Action{`0})">
+            <summary>
+            Executes gulp
+            </summary>
+        </member>
+        <member name="M:Cake.Gulp.GulpRunner`1.ValidateSettings(`0)">
+            <summary>
+            Validates settings
+            </summary>
+            <param name="settings">the settings class</param>
+            <exception cref="T:System.IO.FileNotFoundException">when gulp file does not exist</exception>
+        </member>
+        <member name="T:Cake.Gulp.GulpRunnerAliases">
+            <summary>
+            contains functionality to interact with gulp
+            </summary>
+        </member>
+        <member name="M:Cake.Gulp.GulpRunnerAliases.Gulp(Cake.Core.ICakeContext)">
+            <summary>
+            Allows access to the gulp task orchestrator for either the local or global installation
+            </summary>
+            <param name="context">The cake context</param>
+            <returns></returns>
+            <example>
+            <para>Run 'gulp' from your local gulp installation</para>
+            <para>Cake task:</para>
+            <code>
+            <![CDATA[
+            Task("Gulp")
+                .Does(() =>
+            {
+                Gulp.Local.Execute();
+            });
+            ]]>
+            </code>
+            <para>Run 'gulp' from your global gulp installation</para>
+            <para>Cake task:</para>
+            <code>
+            <![CDATA[
+            Task("Gulp")
+                .Does(() =>
+            {
+                Gulp.Global.Execute();
+            });
+            ]]>
+            </code>
+            <para>Run 'gulp --gulpfile gulpbuild.js'</para>
+            <para>Cake task:</para>
+            <code>
+            <![CDATA[
+            Task("Gulp")
+                .Does(() =>
+            {
+                Gulp.Local.Execute(settings => settings.WithGulpFile("gulpbuild.js"));
+                
+                Gulp.Global.Execute(settings => settings.WithGulpFile("gulpbuild.js"));
+            });
+            ]]>
+            </code>
+            <para>Run 'gulp ci'</para>
+            <para>Cake task:</para>
+            <code>
+            <![CDATA[
+            Task("Gulp")
+                .Does(() =>
+            {
+                Gulp.Local.Execute(settings => settings.WithArguments("ci"));
+                Gulp.Global.Execute(settings => settings.WithArguments("ci"));
+            });
+            ]]>
+            </code>
+            <para>Run 'gulp ci --dist=./artifacts/dist'</para>
+            <para>Cake task:</para>
+            <code>
+            <![CDATA[
+            Task("Gulp")
+                .Does(() =>
+            {
+                Gulp.Local.Execute(settings => settings.WithArguments("ci --dist=./artifacts/dist"));
+            });
+            ]]>
+            </code>
+            </example>
+        </member>
+        <member name="T:Cake.Gulp.GulpRunnerFactory">
+            <summary>
+            Returns a gulp runner based on either a local or global gulp installation via npm
+            </summary>
+        </member>
+        <member name="P:Cake.Gulp.GulpRunnerFactory.Local">
+            <summary>
+            Get a gulp local runner based on a local gulp installation, a local installation is achieved through `npm install gulp`
+            </summary>
+        </member>
+        <member name="P:Cake.Gulp.GulpRunnerFactory.Global">
+            <summary>
+            Get a gulp global runner based on a global gulp installation, a global installation is achieved through `npm install gulp -g`
+            </summary>
+        </member>
+        <member name="T:Cake.Gulp.GulpRunnerSettings">
+            <summary>
+            Gulp settings
+            </summary>
+        </member>
+        <member name="P:Cake.Gulp.GulpRunnerSettings.GulpFile">
+            <summary>
+            The gulpfile to run
+            </summary>
+        </member>
+        <member name="P:Cake.Gulp.GulpRunnerSettings.Arguments">
+            <summary>
+            Argument string to pass to gulp
+            </summary>
+        </member>
+        <member name="M:Cake.Gulp.GulpRunnerSettings.WithGulpFile(Cake.Core.IO.FilePath)">
+            <summary>
+            The gulpfile to use
+            </summary>
+            <param name="gulpfile">path to gulpfile</param>
+            <returns>the settings</returns>
+        </member>
+        <member name="M:Cake.Gulp.GulpRunnerSettings.WithArguments(System.String)">
+            <summary>
+            The argument string to pass to gulp
+            </summary>
+            <param name="arguments">an argument string</param>
+            <returns>the settings</returns>
+        </member>
+        <member name="M:Cake.Gulp.GulpRunnerSettings.EvaluateCore(Cake.Core.IO.ProcessArgumentBuilder)">
+            <summary>
+            evaluate options
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="T:Cake.Gulp.NamespaceDoc">
+            <summary>
+            This namespace contain types used for operations using the Npm tool wrapper
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Cake.XdtTransform</name>
+    </assembly>
+    <members>
+        <member name="T:Cake.XdtTransform.XdtTransformation">
+            <summary>
+            The XDT Transformatin class.
+            </summary>
+        </member>
+        <member name="M:Cake.XdtTransform.XdtTransformation.TransformConfig(Cake.Core.IO.FilePath,Cake.Core.IO.FilePath,Cake.Core.IO.FilePath)">
+            <summary>
+            Transforms config file.
+            </summary>
+            <param name="sourceFile">Source config file.</param>
+            <param name="transformFile">Tranformation to apply.</param>
+            <param name="targetFile">Target config file.</param>
+        </member>
+        <member name="M:Cake.XdtTransform.XdtTransformation.TransformConfig(Cake.Core.IO.IFileSystem,Cake.Core.IO.FilePath,Cake.Core.IO.FilePath,Cake.Core.IO.FilePath)">
+            <summary>
+            Transforms config file.
+            </summary>
+            <param name="fileSystem">The filesystem.</param>
+            <param name="sourceFile">Source config file.</param>
+            <param name="transformFile">Tranformation to apply.</param>
+            <param name="targetFile">Target config file.</param>
+        </member>
+        <member name="T:Cake.XdtTransform.XdtTransformationAlias">
+            <summary>
+            Contains functionality for working with XDT transformations.
+            </summary>
+        </member>
+        <member name="M:Cake.XdtTransform.XdtTransformationAlias.XdtTransformConfig(Cake.Core.ICakeContext,Cake.Core.IO.FilePath,Cake.Core.IO.FilePath,Cake.Core.IO.FilePath)">
+             <summary>
+             Transforms configuration files using XDT Transform library.
+             </summary>
+             <example>
+             <code>
+             var target = Argument("target", "Default");
+            
+             Task("TransformConfig")
+               .Does(() => {
+                 var sourceFile = File("web.config");
+                 var transformFile = File("web.release.config");
+                 var targetFile = File("web.target.config");
+                 XdtTransformConfig(sourceFile, transformFile, targetFile);
+             });
+            
+             RunTarget(target);
+             </code>
+             </example>
+             <param name="context">The context.</param>
+             <param name="sourceFile">Source file to be transformed.</param>
+             <param name="transformFile">Transformation file.</param>
+             <param name="targetFile">Output file name for the transformed file.</param>
+        </member>
+    </members>
+</doc>
